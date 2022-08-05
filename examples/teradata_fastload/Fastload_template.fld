@@ -1,0 +1,48 @@
+sessions    {{sessno}};
+
+logon ${LOGON};
+
+database ${STAGE_DB};
+
+drop table {{stage_table_name}};
+drop table {{stage_table_name}}_err1;
+drop table {{stage_table_name}}_err2;
+
+CREATE TABLE {{stage_table_name}} (
+
+	{{{ colinfo::tabname={{stage_table_name}}
+		{{!1::,}}{{.colname}}	{{.datatype}}
+	}}}
+
+)
+UNIQUE PRIMARY INDEX
+(
+	{{pi_cols}}
+)
+;
+
+begin loading {{stage_table_name}}
+   errorfiles {{stage_table_name}}_err1,
+              {{stage_table_name}}_err2;
+
+set record vartext "{{csv_separator_chr}}" DISPLAY_ERRORS NOSTOP;
+record {{start_at_rec}};
+
+define
+	{{{ colinfo::tabname={{stage_table_name}}
+		{{!1::,}}{{.colname}}	({{.fastload_datatype}})
+	}}}
+file = ${DATADIR_WORK}/{{extract_file_name}};
+
+insert into {{stage_table_name}} (
+	{{{ colinfo::tabname={{stage_table_name}}
+		{{!1::,}}{{.colname}}
+	}}}
+) values (
+	{{{ colinfo::tabname={{stage_table_name}}
+		{{!1::,}}:{{.colname}}
+	}}}
+);
+
+end loading;
+logoff;

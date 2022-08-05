@@ -1,0 +1,21 @@
+CREATE TABLE DW_SCHEMA.DW_NEW_TABLE (
+
+		 column1	varchar2(100)	not null
+		, column2	integer	
+		, column3	date	not null
+		, column4	integer	
+		, column5	decimal(15,4)	not null
+	
+		, CONSTRAINT DW_NEW_TABLE_PK PRIMARY KEY (
+		
+		     column1
+		    , column3
+		
+		)
+);
+
+COMMENT ON COLUMN DW_SCHEMA.DW_NEW_TABLE.column1 IS 'This is the primary key, part 1';
+COMMENT ON COLUMN DW_SCHEMA.DW_NEW_TABLE.column2 IS '';
+COMMENT ON COLUMN DW_SCHEMA.DW_NEW_TABLE.column3 IS 'Creation date; also primary key part 2';
+COMMENT ON COLUMN DW_SCHEMA.DW_NEW_TABLE.column4 IS 'Flex attribute to hold any info';
+COMMENT ON COLUMN DW_SCHEMA.DW_NEW_TABLE.column5 IS 'Last payment amount';

@@ -1,0 +1,6 @@
+sessno=1
+start_at_rec=2
+stage_table_name=DEVICES
+pi_cols=Device_ID
+extract_file_name=DEVICES.csv
+csv_separator_chr=;

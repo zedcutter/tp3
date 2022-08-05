@@ -1,0 +1,6 @@
+colname;datatype;nullable;col_comment
+column1;varchar2(100);not null;This is the primary key, part 1
+column2;integer;;
+column3;date;not null;Creation date\; also primary key part 2
+column4;integer;;Flex attribute to hold any info
+column5;decimal(15,4);not null;Last payment amount

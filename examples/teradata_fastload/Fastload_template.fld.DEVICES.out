@@ -1,0 +1,64 @@
+sessions    1;
+
+logon ${LOGON};
+
+database ${STAGE_DB};
+
+drop table DEVICES;
+drop table DEVICES_err1;
+drop table DEVICES_err2;
+
+CREATE TABLE DEVICES (
+
+		Device_ID	VARCHAR(6)
+		,Manufacturer_ID	INTEGER
+		,Device_Type_ID	INTEGER
+		,Device_Model_Name	VARCHAR(500)
+		,Marketing_Name	VARCHAR(200)
+		,Model_Release_Date	VARCHAR(4)
+		,Load_Date	VARCHAR(10)
+
+)
+UNIQUE PRIMARY INDEX
+(
+	Device_ID
+)
+;
+
+begin loading DEVICES
+   errorfiles DEVICES_err1,
+              DEVICES_err2;
+
+set record vartext ";" DISPLAY_ERRORS NOSTOP;
+record 2;
+
+define
+		Device_ID	(VARCHAR(6))
+		,Manufacturer_ID	(VARCHAR(12))
+		,Device_Type_ID	(VARCHAR(12))
+		,Device_Model_Name	(VARCHAR(500))
+		,Marketing_Name	(VARCHAR(200))
+		,Model_Release_Date	(VARCHAR(4))
+		,Load_Date	(VARCHAR(10))
+file = ${DATADIR_WORK}/DEVICES.csv;
+
+insert into DEVICES (
+		Device_ID
+		,Manufacturer_ID
+		,Device_Type_ID
+		,Device_Model_Name
+		,Marketing_Name
+		,Model_Release_Date
+		,Load_Date
+) values (
+		:Device_ID
+		,:Manufacturer_ID
+		,:Device_Type_ID
+		,:Device_Model_Name
+		,:Marketing_Name
+		,:Model_Release_Date
+		,:Load_Date
+);
+
+end loading;
+logoff;
